@@ -164,7 +164,7 @@ $(document).ready(function(){
     console.log("awawawaw")
     $.ajax({
     type: "GET",
-    url: '<?php echo site_url('/api/ongkir'); ?>?mode=Province',
+    url: '<?php echo site_url('/index.php/api/ongkir'); ?>?mode=Province',
     dataType: "json"
     }).done(function (data) {
         console.log(data)
@@ -183,7 +183,7 @@ $(document).ready(function(){
     $('#provisi_origin').change(function(){
         let province = $(this).val();
 
-        $.get('<?php echo site_url('/api/ongkir'); ?>?mode=City&province='+province,function(data){
+        $.get('<?php echo site_url('/index.php/api/ongkir'); ?>?mode=City&province='+province,function(data){
             //city origin
             
             var html = '<option value="0">Kota</option>';
@@ -197,14 +197,14 @@ $(document).ready(function(){
     $('#city').change(function(){
         let city = $(this).val();
 
-        $.get('<?php echo site_url('/api/ongkir'); ?>?mode=Postal&city='+city,function(data){
+        $.get('<?php echo site_url('/index.php/api/ongkir'); ?>?mode=Postal&city='+city,function(data){
             html = '<option value="'+data.city_id+'">'+data.postal_code+'</option>';
             $('#postal_code').html(html);
         });
     });
 
     //Shipment Destination
-    $.get('<?php echo site_url('/api/ongkir'); ?>?mode=Province',function(data){
+    $.get('<?php echo site_url('/index.php/api/ongkir'); ?>?mode=Province',function(data){
         var html = '<option value="0">Tujuan Provinsi</option>';
         for(let i=0; i< data.length; i++){
             html += '<option value="'+data[i].province_id+'">'+data[i].province+'</option>';
@@ -216,7 +216,7 @@ $(document).ready(function(){
     $('#provisi_id_des').change(function(){
         let province = $(this).val();
 
-        $.get('<?php echo site_url('/api/ongkir'); ?>?mode=City&province='+province,function(data){
+        $.get('<?php echo site_url('/index.php/api/ongkir'); ?>?mode=City&province='+province,function(data){
             var html = '<option value="0">Tujuan Kota</option>';
             for(let i=0; i< data.length; i++){
                 html += '<option value="'+data[i].city_id+'">'+data[i].type+'-'+data[i].city_name+'</option>';
@@ -241,7 +241,7 @@ $(document).ready(function(){
         let destination = $('#city_id').val();
         let kurir = $("#kurir").val();
 
-        $.get('<?php echo site_url('/api/ongkir'); ?>?mode=Cost&destination='+destination+'&origin='+origin+'&kurir='+kurir,function(data){
+        $.get('<?php echo site_url('/index.php/api/ongkir'); ?>?mode=Cost&destination='+destination+'&origin='+origin+'&kurir='+kurir,function(data){
             var html = '';
             let costs = data[0].costs;
             for(let i=0; i < costs.length; i++){

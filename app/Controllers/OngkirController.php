@@ -61,7 +61,6 @@ class OngkirController extends BaseController
 		$province = json_decode($response);
 		curl_close($ch);
 
-		echo var_dump($province,FALSE);
 		return $province->rajaongkir->results;
 	}
 

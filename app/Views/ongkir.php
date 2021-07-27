@@ -11,12 +11,12 @@
     </head>
     <body>
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm bg-danger navbar-dark">
     <a class="navbar-brand m-1" href="#">Ongkir</a>
 </nav>
 
 <div class="container mt-5" >
-    <div class="card">
+    <div class="card bg-danger text-white">
         <div class="card-header">
             Shipment
         </div>
@@ -31,7 +31,7 @@
                                 
                                 <div class="col-sm-9">
                                     <select name="province_origin" id="provisi_origin" class="form-control">
-                                        <option value="0">&mdash;&mdash;Province&mdash;&mdash;</option>
+                                        <option value="0">Provinsi</option>
                                     </select>
                                 </div>
 
@@ -42,7 +42,7 @@
                                 <div class="col-sm-9">
                                     
                                     <select name="city" id="city" class="form-control">
-                                        <option value="0">&mdash;&mdash;City&mdash;&mdash;</option>
+                                        <option value="0">Kota</option>
                                     </select>
 
                                 </div>
@@ -52,7 +52,7 @@
                                 <label  class="col-sm-3 col-form-label" style="text-align: right;">Kode Pos</label>
                                 <div class="col-sm-9">
                                     <select name="postal_code" id="postal_code" class="form-control">
-                                        <option value="0">&mdash;&mdash;Kode Pos&mdash;&mdash;</option>
+                                        <option value="0">kode pos</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                 <label  class="col-sm-3 col-form-label" style="text-align: right;">Provinsi</label>
                                 <div class="col-sm-9">
                                     <select name="province" id="provisi_id_des" class="form-control">
-                                        <option value="0">&mdash;&mdash;Provice&mdash;&mdash;</option>
+                                        <option value="0">Tujuan Provinsi</option>
                                     </select>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                 <label class="col-sm-3 col-form-label" style="text-align: right;">Kota</label>
                                 <div class="col-sm-9">
                                     <select name="city" id="city_id" class="form-control">
-                                        <option value="0">&mdash;&mdash;City&mdash;&mdash;</option>
+                                        <option value="0">Tujuan Kota</option>
                                     </select>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                 <label class="col-sm-3 col-form-label" style="text-align: right;">Kurir</label>
                                 <div class="col-sm-9">
                                     <select name="kurir" id="kurir" class="form-control">
-                                        <option value="0" selected>&mdash;&mdash;Kurir&mdash;&mdash;</option>
+                                        <option value="0" selected>Kurir</option>
                                         <option value="jne">JNE</option>
                                         <option value="pos">POS</option>
                                         <option value="tiki">TIKI</option>
@@ -130,7 +130,7 @@
         </div>
 
         <div class="card-footer text-muted" style="text-align: right;">
-            <button class="btn btn-outline-danger" id="reset">Reset</button>
+            <button class="btn btn-outline-warning" id="reset">Reset</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Hitung Biaya</button>
         </div>
 
@@ -162,13 +162,21 @@ $(document).ready(function(){
     
     //Shipment Origin
     console.log("awawawaw")
-    $.get('/api/ongkir?mode=Province',function(data){
-        var html = '<option value="0">&mdash;&mdash;Province&mdash;&mdash;</option>';
-        console.log("test")
+    $.ajax({
+    type: "GET",
+    url: '<?php echo site_url('/api/ongkir'); ?>?mode=Province',
+    dataType: "json"
+    }).done(function (data) {
+        console.log(data)
+        var html = '<option value="0">Provinsi</option>';
         for(let i=0; i< data.length; i++){
             html += '<option value="'+data[i].province_id+'">'+data[i].province+'</option>';
         }
         $('#provisi_origin').html(html);
+
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+        alert("AJAX call failed: " + textStatus + ", " + errorThrown);
     });
 
     //isi cmb kabupaten origin
@@ -178,7 +186,7 @@ $(document).ready(function(){
         $.get('<?php echo site_url('/api/ongkir'); ?>?mode=City&province='+province,function(data){
             //city origin
             
-            var html = '<option value="0">&mdash;&mdash;City&mdash;&mdash;</option>';
+            var html = '<option value="0">Kota</option>';
             for(let i=0; i< data.length; i++){
                 html += '<option value="'+data[i].city_id+'">'+data[i].type+'-'+data[i].city_name+'</option>';
             }
@@ -197,7 +205,7 @@ $(document).ready(function(){
 
     //Shipment Destination
     $.get('<?php echo site_url('/api/ongkir'); ?>?mode=Province',function(data){
-        var html = '<option value="0">&mdash;&mdash;Provice&mdash;&mdash;</option>';
+        var html = '<option value="0">Tujuan Provinsi</option>';
         for(let i=0; i< data.length; i++){
             html += '<option value="'+data[i].province_id+'">'+data[i].province+'</option>';
         }
@@ -209,7 +217,7 @@ $(document).ready(function(){
         let province = $(this).val();
 
         $.get('<?php echo site_url('/api/ongkir'); ?>?mode=City&province='+province,function(data){
-            var html = '<option value="0">&mdash;&mdash;City&mdash;&mdash;</option>';
+            var html = '<option value="0">Tujuan Kota</option>';
             for(let i=0; i< data.length; i++){
                 html += '<option value="'+data[i].city_id+'">'+data[i].type+'-'+data[i].city_name+'</option>';
             }

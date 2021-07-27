@@ -144,7 +144,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p class="text-center">Biaya yang diperlukan adalah</p>
+                        <p class="text-center text-success">Biaya yang diperlukan adalah</p>
                         <h2 name="ongkir" id="ongkir" class="text-success text-center"></h2>
                     </div>
                     <div class="modal-footer">
